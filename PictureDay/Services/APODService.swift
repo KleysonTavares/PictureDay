@@ -10,8 +10,8 @@ import Combine
 
 // MARK: - APOD Service Protocol
 protocol APODServiceProtocol {
-    func fetchAPOD(for date: Date?) -> AnyPublisher<APODResponse, APODError>
-    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODResponse], APODError>
+    func fetchAPOD(for date: Date?) -> AnyPublisher<APODModel, TypeError>
+    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODModel], TypeError>
 }
 
 // MARK: - APOD Service Implementation
@@ -24,28 +24,28 @@ class APODService: APODServiceProtocol {
         self.decoder = JSONDecoder()
     }
     
-    func fetchAPOD(for date: Date? = nil) -> AnyPublisher<APODResponse, APODError> {
-        guard let url = APODServiceConfig.url(for: date) else {
-            return Fail(error: APODError.invalidURL)
+    func fetchAPOD(for date: Date? = nil) -> AnyPublisher<APODModel, TypeError> {
+        guard let url = ServiceConfig.url(for: date) else {
+            return Fail(error: TypeError.invalidURL)
                 .eraseToAnyPublisher()
         }
         
         return session.dataTaskPublisher(for: url)
             .map(\.data)
-            .decode(type: APODResponse.self, decoder: decoder)
+            .decode(type: APODModel.self, decoder: decoder)
             .mapError { error in
                 if error is DecodingError {
-                    return APODError.decodingError
+                    return TypeError.decodingError
                 } else {
-                    return APODError.networkError(error)
+                    return TypeError.networkError(error)
                 }
             }
             .eraseToAnyPublisher()
     }
     
-    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODResponse], APODError> {
-        guard let url = APODServiceConfig.url(for: nil) else {
-            return Fail(error: APODError.invalidURL)
+    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODModel], TypeError> {
+        guard let url = ServiceConfig.url(for: nil) else {
+            return Fail(error: TypeError.invalidURL)
                 .eraseToAnyPublisher()
         }
         
@@ -62,18 +62,18 @@ class APODService: APODServiceProtocol {
         components?.queryItems = existingQueryItems + newQueryItems
         
         guard let finalURL = components?.url else {
-            return Fail(error: APODError.invalidURL)
+            return Fail(error: TypeError.invalidURL)
                 .eraseToAnyPublisher()
         }
         
         return session.dataTaskPublisher(for: finalURL)
             .map(\.data)
-            .decode(type: [APODResponse].self, decoder: decoder)
+            .decode(type: [APODModel].self, decoder: decoder)
             .mapError { error in
                 if error is DecodingError {
-                    return APODError.decodingError
+                    return TypeError.decodingError
                 } else {
-                    return APODError.networkError(error)
+                    return TypeError.networkError(error)
                 }
             }
             .eraseToAnyPublisher()
@@ -82,26 +82,26 @@ class APODService: APODServiceProtocol {
 
 // MARK: - Mock APOD Service for Testing
 class MockAPODService: APODServiceProtocol {
-    private let mockData: [APODResponse]
+    private let mockData: [APODModel]
     
-    init(mockData: [APODResponse] = []) {
+    init(mockData: [APODModel] = []) {
         self.mockData = mockData
     }
     
-    func fetchAPOD(for date: Date? = nil) -> AnyPublisher<APODResponse, APODError> {
+    func fetchAPOD(for date: Date? = nil) -> AnyPublisher<APODModel, TypeError> {
         if let firstItem = mockData.first {
             return Just(firstItem)
-                .setFailureType(to: APODError.self)
+                .setFailureType(to: TypeError.self)
                 .eraseToAnyPublisher()
         } else {
-            return Fail(error: APODError.noData)
+            return Fail(error: TypeError.noData)
                 .eraseToAnyPublisher()
         }
     }
     
-    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODResponse], APODError> {
+    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODModel], TypeError> {
         return Just(mockData)
-            .setFailureType(to: APODError.self)
+            .setFailureType(to: TypeError.self)
             .eraseToAnyPublisher()
     }
 }

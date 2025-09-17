@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - Favorites View Model
 @MainActor
 class FavoritesViewModel: ObservableObject {
-    @Published var favorites: [APODResponse] = []
+    @Published var favorites: [APODModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     
@@ -43,7 +43,7 @@ class FavoritesViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func removeFromFavorites(_ apod: APODResponse) {
+    func removeFromFavorites(_ apod: APODModel) {
         favoritesService.removeFromFavorites(apod)
             .receive(on: DispatchQueue.main)
             .sink(

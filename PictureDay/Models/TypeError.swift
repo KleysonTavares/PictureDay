@@ -1,5 +1,5 @@
 //
-//  APODError.swift
+//  TypeError.swift
 //  PictureDay
 //
 //  Created by Kleyson Tavares on 16/09/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum APODError: Error, LocalizedError {
+enum TypeError: Error, LocalizedError {
     case invalidURL
     case noData
     case decodingError

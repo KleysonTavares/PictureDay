@@ -1,5 +1,5 @@
 //
-//  APODServiceConfig.swift
+//  ServiceConfig.swift
 //  PictureDay
 //
 //  Created by Kleyson Tavares on 16/09/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APODServiceConfig {
+struct ServiceConfig {
     static let baseURL = "https://api.nasa.gov/planetary/apod"
     static let apiKey = "DbVfQ2rMC5rBVbcxaLMl8PTbi6jzvFkn06buczec"
     

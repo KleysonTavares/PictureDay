@@ -7,8 +7,7 @@
 
 import Foundation
 
-// MARK: - APOD Response Model
-struct APODResponse: Codable, Identifiable {
+struct APODModel: Codable, Identifiable {
     let id = UUID()
     let date: String
     let explanation: String

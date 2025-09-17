@@ -56,7 +56,7 @@ final class PictureDayTests: XCTestCase {
             .sink(
                 receiveCompletion: { completion in
                     if case .failure(let error) = completion {
-                        XCTAssertTrue(error is APODError)
+                        XCTAssertTrue(error is TypeError)
                         expectation.fulfill()
                     } else {
                         XCTFail("Expected failure")
@@ -74,7 +74,7 @@ final class PictureDayTests: XCTestCase {
     // MARK: - Mock Service Tests
     func testMockAPODService() throws {
         let mockData = [
-            APODResponse(
+            APODModel(
                 date: "2024-01-01",
                 explanation: "Test explanation",
                 hdurl: "https://example.com/hd.jpg",
@@ -111,7 +111,7 @@ final class PictureDayTests: XCTestCase {
         let mockService = MockFavoritesService()
         let expectation = XCTestExpectation(description: "Mock favorites")
         
-        let testAPOD = APODResponse(
+        let testAPOD = APODModel(
             date: "2024-01-01",
             explanation: "Test explanation",
             hdurl: nil,
@@ -184,7 +184,7 @@ final class PictureDayTests: XCTestCase {
         
         let data = json.data(using: .utf8)!
         let decoder = JSONDecoder()
-        let apod = try decoder.decode(APODResponse.self, from: data)
+        let apod = try decoder.decode(APODModel.self, from: data)
         
         XCTAssertEqual(apod.date, "2024-01-01")
         XCTAssertEqual(apod.explanation, "Test explanation")
@@ -196,16 +196,16 @@ final class PictureDayTests: XCTestCase {
     }
     
     // MARK: - APOD Service Config Tests
-    func testAPODServiceConfigURL() throws {
-        let url = APODServiceConfig.url()
+    func testServiceConfigURL() throws {
+        let url = ServiceConfig.url()
         XCTAssertNotNil(url)
         XCTAssertTrue(url?.absoluteString.contains("api.nasa.gov") == true)
         XCTAssertTrue(url?.absoluteString.contains("api_key") == true)
     }
     
-    func testAPODServiceConfigURLWithDate() throws {
+    func testServiceConfigURLWithDate() throws {
         let testDate = Date(timeIntervalSince1970: 1640995200) // 2022-01-01
-        let url = APODServiceConfig.url(for: testDate)
+        let url = ServiceConfig.url(for: testDate)
         XCTAssertNotNil(url)
         XCTAssertTrue(url?.absoluteString.contains("date=2022-01-01") == true)
     }

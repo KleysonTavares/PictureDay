@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListView: View {
     @StateObject private var viewModel: ListViewModel
-    @State private var selectedAPOD: APODResponse?
+    @State private var selectedAPOD: APODModel?
     
     init(favoritesService: FavoritesServiceProtocol) {
         self._viewModel = StateObject(wrappedValue: ListViewModel(favoritesService: favoritesService))
@@ -89,7 +89,7 @@ struct ListView: View {
 
 // MARK: - APOD List Row View
 struct APODListRowView: View {
-    let apod: APODResponse
+    let apod: APODModel
     let isFavorite: Bool
     let onFavoriteToggle: () -> Void
     let onTap: () -> Void

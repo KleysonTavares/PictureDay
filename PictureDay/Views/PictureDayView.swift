@@ -183,7 +183,7 @@ struct APODImageView: View {
     
     private func loadImage() {
         guard let imageURL = URL(string: url) else {
-            error = APODError.invalidURL
+            error = TypeError.invalidURL
             isLoading = false
             return
         }
@@ -197,7 +197,7 @@ struct APODImageView: View {
                 }
                 
                 guard let data = data, let uiImage = UIImage(data: data) else {
-                    self.error = APODError.noData
+                    self.error = TypeError.noData
                     self.isLoading = false
                     return
                 }

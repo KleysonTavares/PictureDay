@@ -11,10 +11,10 @@ import Combine
 
 // MARK: - Favorites Service Protocol
 protocol FavoritesServiceProtocol {
-    func addToFavorites(_ apod: APODResponse) -> AnyPublisher<Bool, Error>
-    func removeFromFavorites(_ apod: APODResponse) -> AnyPublisher<Bool, Error>
-    func isFavorite(_ apod: APODResponse) -> AnyPublisher<Bool, Error>
-    func fetchFavorites() -> AnyPublisher<[APODResponse], Error>
+    func addToFavorites(_ apod: APODModel) -> AnyPublisher<Bool, Error>
+    func removeFromFavorites(_ apod: APODModel) -> AnyPublisher<Bool, Error>
+    func isFavorite(_ apod: APODModel) -> AnyPublisher<Bool, Error>
+    func fetchFavorites() -> AnyPublisher<[APODModel], Error>
 }
 
 // MARK: - Favorites Service Implementation
@@ -25,7 +25,7 @@ class FavoritesService: FavoritesServiceProtocol {
         self.context = context
     }
     
-    func addToFavorites(_ apod: APODResponse) -> AnyPublisher<Bool, Error> {
+    func addToFavorites(_ apod: APODModel) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { [weak self] promise in
             guard let self = self else {
                 promise(.failure(NSError(domain: "FavoritesService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Context não disponível"])))
@@ -60,7 +60,7 @@ class FavoritesService: FavoritesServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func removeFromFavorites(_ apod: APODResponse) -> AnyPublisher<Bool, Error> {
+    func removeFromFavorites(_ apod: APODModel) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { [weak self] promise in
             guard let self = self else {
                 promise(.failure(NSError(domain: "FavoritesService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Context não disponível"])))
@@ -86,7 +86,7 @@ class FavoritesService: FavoritesServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func isFavorite(_ apod: APODResponse) -> AnyPublisher<Bool, Error> {
+    func isFavorite(_ apod: APODModel) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { [weak self] promise in
             guard let self = self else {
                 promise(.failure(NSError(domain: "FavoritesService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Context não disponível"])))
@@ -106,8 +106,8 @@ class FavoritesService: FavoritesServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func fetchFavorites() -> AnyPublisher<[APODResponse], Error> {
-        return Future<[APODResponse], Error> { [weak self] promise in
+    func fetchFavorites() -> AnyPublisher<[APODModel], Error> {
+        return Future<[APODModel], Error> { [weak self] promise in
             guard let self = self else {
                 promise(.failure(NSError(domain: "FavoritesService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Context não disponível"])))
                 return
@@ -119,7 +119,7 @@ class FavoritesService: FavoritesServiceProtocol {
             do {
                 let favorites = try self.context.fetch(request)
                 let apodResponses = favorites.map { favorite in
-                    APODResponse(
+                    APODModel(
                         date: favorite.date ?? "",
                         explanation: favorite.explanation ?? "",
                         hdurl: favorite.hdurl,

@@ -9,14 +9,14 @@ import SwiftUI
 import Combine
 
 struct PictureDetailView: View {
-    let apod: APODResponse
+    let apod: APODModel
     let favoritesService: FavoritesServiceProtocol
     
     @StateObject private var viewModel: APODDetailViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var showingFullImage = false
     
-    init(apod: APODResponse, favoritesService: FavoritesServiceProtocol) {
+    init(apod: APODModel, favoritesService: FavoritesServiceProtocol) {
         self.apod = apod
         self.favoritesService = favoritesService
         self._viewModel = StateObject(wrappedValue: APODDetailViewModel(apod: apod, favoritesService: favoritesService))
@@ -149,11 +149,11 @@ struct PictureDetailView: View {
 class APODDetailViewModel: ObservableObject {
     @Published var isFavorite = false
     
-    private let apod: APODResponse
+    private let apod: APODModel
     private let favoritesService: FavoritesServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
-    init(apod: APODResponse, favoritesService: FavoritesServiceProtocol) {
+    init(apod: APODModel, favoritesService: FavoritesServiceProtocol) {
         self.apod = apod
         self.favoritesService = favoritesService
     }
@@ -307,7 +307,7 @@ struct FullScreenImageView: View {
 }
 
 #Preview {
-    let sampleAPOD = APODResponse(
+    let sampleAPOD = APODModel(
         date: "2024-01-01",
         explanation: "Esta é uma descrição de exemplo para a foto do dia da NASA.",
         hdurl: "https://example.com/hd-image.jpg",

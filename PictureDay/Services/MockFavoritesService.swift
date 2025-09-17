@@ -10,9 +10,9 @@ import Combine
 
 // MARK: - Mock Favorites Service for Testing
 class MockFavoritesService: FavoritesServiceProtocol {
-    private var favorites: [APODResponse] = []
+    private var favorites: [APODModel] = []
     
-    func addToFavorites(_ apod: APODResponse) -> AnyPublisher<Bool, Error> {
+    func addToFavorites(_ apod: APODModel) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { [weak self] promise in
             if self?.favorites.contains(where: { $0.date == apod.date }) == false {
                 self?.favorites.append(apod)
@@ -24,7 +24,7 @@ class MockFavoritesService: FavoritesServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func removeFromFavorites(_ apod: APODResponse) -> AnyPublisher<Bool, Error> {
+    func removeFromFavorites(_ apod: APODModel) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { [weak self] promise in
             if let index = self?.favorites.firstIndex(where: { $0.date == apod.date }) {
                 self?.favorites.remove(at: index)
@@ -36,7 +36,7 @@ class MockFavoritesService: FavoritesServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func isFavorite(_ apod: APODResponse) -> AnyPublisher<Bool, Error> {
+    func isFavorite(_ apod: APODModel) -> AnyPublisher<Bool, Error> {
         return Future<Bool, Error> { [weak self] promise in
             let isFav = self?.favorites.contains(where: { $0.date == apod.date }) ?? false
             promise(.success(isFav))
@@ -44,8 +44,8 @@ class MockFavoritesService: FavoritesServiceProtocol {
         .eraseToAnyPublisher()
     }
     
-    func fetchFavorites() -> AnyPublisher<[APODResponse], Error> {
-        return Future<[APODResponse], Error> { [weak self] promise in
+    func fetchFavorites() -> AnyPublisher<[APODModel], Error> {
+        return Future<[APODModel], Error> { [weak self] promise in
             promise(.success(self?.favorites ?? []))
         }
         .eraseToAnyPublisher()

@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - APOD View Model
 @MainActor
 class PictureDayViewModel: ObservableObject {
-    @Published var currentAPOD: APODResponse?
+    @Published var currentAPOD: APODModel?
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var isFavorite = false
@@ -67,7 +67,7 @@ class PictureDayViewModel: ObservableObject {
         }
     }
     
-    private func addToFavorites(_ apod: APODResponse) {
+    private func addToFavorites(_ apod: APODModel) {
         favoritesService.addToFavorites(apod)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -85,7 +85,7 @@ class PictureDayViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func removeFromFavorites(_ apod: APODResponse) {
+    private func removeFromFavorites(_ apod: APODModel) {
         favoritesService.removeFromFavorites(apod)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -103,7 +103,7 @@ class PictureDayViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func checkIfFavorite(_ apod: APODResponse) {
+    private func checkIfFavorite(_ apod: APODModel) {
         favoritesService.isFavorite(apod)
             .receive(on: DispatchQueue.main)
             .sink(

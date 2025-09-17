@@ -12,7 +12,7 @@ import SwiftUI
 // MARK: - List View Model
 @MainActor
 class ListViewModel: ObservableObject {
-    @Published var apodList: [APODResponse] = []
+    @Published var apodList: [APODModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var favoriteStatuses: [String: Bool] = [:]
@@ -51,7 +51,7 @@ class ListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func toggleFavorite(for apod: APODResponse) {
+    func toggleFavorite(for apod: APODModel) {
         let isCurrentlyFavorite = favoriteStatuses[apod.date] ?? false
         
         if isCurrentlyFavorite {
@@ -61,7 +61,7 @@ class ListViewModel: ObservableObject {
         }
     }
     
-    private func addToFavorites(_ apod: APODResponse) {
+    private func addToFavorites(_ apod: APODModel) {
         favoritesService.addToFavorites(apod)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -79,7 +79,7 @@ class ListViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func removeFromFavorites(_ apod: APODResponse) {
+    private func removeFromFavorites(_ apod: APODModel) {
         favoritesService.removeFromFavorites(apod)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -111,7 +111,7 @@ class ListViewModel: ObservableObject {
         }
     }
     
-    func isFavorite(_ apod: APODResponse) -> Bool {
+    func isFavorite(_ apod: APODModel) -> Bool {
         return favoriteStatuses[apod.date] ?? false
     }
 }
