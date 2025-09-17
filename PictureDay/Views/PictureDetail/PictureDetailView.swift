@@ -12,14 +12,14 @@ struct PictureDetailView: View {
     let apod: APODModel
     let favoritesService: FavoritesServiceProtocol
     
-    @StateObject private var viewModel: APODDetailViewModel
+    @StateObject private var viewModel: DetailViewModel
     @Environment(\.dismiss) private var dismiss
     @State private var showingFullImage = false
     
     init(apod: APODModel, favoritesService: FavoritesServiceProtocol) {
         self.apod = apod
         self.favoritesService = favoritesService
-        self._viewModel = StateObject(wrappedValue: APODDetailViewModel(apod: apod, favoritesService: favoritesService))
+        self._viewModel = StateObject(wrappedValue: DetailViewModel(apod: apod, favoritesService: favoritesService))
     }
     
     var body: some View {
@@ -141,168 +141,6 @@ struct PictureDetailView: View {
         
         formatter.dateFormat = "dd/MM/yyyy"
         return formatter.string(from: date)
-    }
-}
-
-// MARK: - Detail View Model
-@MainActor
-class APODDetailViewModel: ObservableObject {
-    @Published var isFavorite = false
-    
-    private let apod: APODModel
-    private let favoritesService: FavoritesServiceProtocol
-    private var cancellables = Set<AnyCancellable>()
-    
-    init(apod: APODModel, favoritesService: FavoritesServiceProtocol) {
-        self.apod = apod
-        self.favoritesService = favoritesService
-    }
-    
-    func checkFavoriteStatus() {
-        favoritesService.isFavorite(apod)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { [weak self] isFav in
-                    self?.isFavorite = isFav
-                }
-            )
-            .store(in: &cancellables)
-    }
-    
-    func toggleFavorite() {
-        if isFavorite {
-            removeFromFavorites()
-        } else {
-            addToFavorites()
-        }
-    }
-    
-    private func addToFavorites() {
-        favoritesService.addToFavorites(apod)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { [weak self] success in
-                    if success {
-                        self?.isFavorite = true
-                    }
-                }
-            )
-            .store(in: &cancellables)
-    }
-    
-    private func removeFromFavorites() {
-        favoritesService.removeFromFavorites(apod)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { [weak self] success in
-                    if success {
-                        self?.isFavorite = false
-                    }
-                }
-            )
-            .store(in: &cancellables)
-    }
-}
-
-// MARK: - Full Screen Image View
-struct FullScreenImageView: View {
-    let url: String
-    let hdurl: String?
-    @Environment(\.dismiss) private var dismiss
-    @State private var image: UIImage?
-    @State private var isLoading = true
-    @State private var scale: CGFloat = 1.0
-    @State private var offset: CGSize = .zero
-    @State private var lastOffset: CGSize = .zero
-    
-    var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            
-            if let image = image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .scaleEffect(scale)
-                    .offset(offset)
-                    .gesture(
-                        MagnificationGesture()
-                            .onChanged { value in
-                                scale = lastOffset.width + value
-                            }
-                            .onEnded { value in
-                                lastOffset = offset
-                                if scale < 1.0 {
-                                    scale = 1.0
-                                    offset = .zero
-                                    lastOffset = .zero
-                                }
-                            }
-                    )
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                offset = CGSize(
-                                    width: lastOffset.width + value.translation.width,
-                                    height: lastOffset.height + value.translation.height
-                                )
-                            }
-                            .onEnded { value in
-                                lastOffset = offset
-                            }
-                    )
-            } else if isLoading {
-                ProgressView("Carregando...")
-                    .foregroundColor(.white)
-                    .font(.headline)
-            } else {
-                VStack {
-                    Image(systemName: "exclamationmark.triangle")
-                        .font(.system(size: 50))
-                        .foregroundColor(.red)
-                    Text("Erro ao carregar imagem")
-                        .foregroundColor(.white)
-                }
-            }
-            
-            VStack {
-                HStack {
-                    Spacer()
-                    Button("Fechar") {
-                        dismiss()
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.black.opacity(0.5))
-                    .cornerRadius(8)
-                }
-                Spacer()
-            }
-            .padding()
-        }
-        .onAppear {
-            loadImage()
-        }
-    }
-    
-    private func loadImage() {
-        let imageURLString = hdurl ?? url
-        guard let imageURL = URL(string: imageURLString) else {
-            isLoading = false
-            return
-        }
-        
-        URLSession.shared.dataTask(with: imageURL) { data, response, error in
-            DispatchQueue.main.async {
-                if let data = data, let uiImage = UIImage(data: data) {
-                    self.image = uiImage
-                }
-                self.isLoading = false
-            }
-        }.resume()
     }
 }
 
