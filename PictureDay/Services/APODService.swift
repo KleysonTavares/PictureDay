@@ -79,29 +79,3 @@ class APODService: APODServiceProtocol {
             .eraseToAnyPublisher()
     }
 }
-
-// MARK: - Mock APOD Service for Testing
-class MockAPODService: APODServiceProtocol {
-    private let mockData: [APODModel]
-    
-    init(mockData: [APODModel] = []) {
-        self.mockData = mockData
-    }
-    
-    func fetchAPOD(for date: Date? = nil) -> AnyPublisher<APODModel, TypeError> {
-        if let firstItem = mockData.first {
-            return Just(firstItem)
-                .setFailureType(to: TypeError.self)
-                .eraseToAnyPublisher()
-        } else {
-            return Fail(error: TypeError.noData)
-                .eraseToAnyPublisher()
-        }
-    }
-    
-    func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODModel], TypeError> {
-        return Just(mockData)
-            .setFailureType(to: TypeError.self)
-            .eraseToAnyPublisher()
-    }
-}
