@@ -3,7 +3,17 @@
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="FavoriteAPOD" representedClassName="FavoriteAPOD" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="NO" attributeType="String"/>
+        <attribute name="explanation" optional="NO" attributeType="String"/>
+        <attribute name="hdurl" optional="YES" attributeType="String"/>
+        <attribute name="mediaType" optional="NO" attributeType="String"/>
+        <attribute name="title" optional="NO" attributeType="String"/>
+        <attribute name="url" optional="NO" attributeType="String"/>
+        <attribute name="favoriteDate" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
     <elements>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="FavoriteAPOD" positionX="-63" positionY="18" width="128" height="119"/>
     </elements>
 </model>
