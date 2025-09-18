@@ -26,8 +26,7 @@ class PictureDayViewModel: ObservableObject {
          favoritesService: FavoritesServiceProtocol) {
         self.apodService = apodService
         self.favoritesService = favoritesService
-        
-        // Observar mudanças na data selecionada
+
         $selectedDate
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .sink { [weak self] date in
@@ -35,11 +34,11 @@ class PictureDayViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+
     func fetchAPOD(for date: Date? = nil) {
         isLoading = true
         errorMessage = nil
-        
+
         apodService.fetchAPOD(for: date)
             .receive(on: DispatchQueue.main)
             .sink(
@@ -56,17 +55,17 @@ class PictureDayViewModel: ObservableObject {
             )
             .store(in: &cancellables)
     }
-    
+
     func toggleFavorite() {
         guard let apod = currentAPOD else { return }
-        
+
         if isFavorite {
             removeFromFavorites(apod)
         } else {
             addToFavorites(apod)
         }
     }
-    
+
     private func addToFavorites(_ apod: APODModel) {
         favoritesService.addToFavorites(apod)
             .receive(on: DispatchQueue.main)
@@ -84,7 +83,7 @@ class PictureDayViewModel: ObservableObject {
             )
             .store(in: &cancellables)
     }
-    
+
     private func removeFromFavorites(_ apod: APODModel) {
         favoritesService.removeFromFavorites(apod)
             .receive(on: DispatchQueue.main)
@@ -125,5 +124,14 @@ class PictureDayViewModel: ObservableObject {
     
     func goToToday() {
         selectedDate = Date()
+    }
+    
+    func isToday() -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let today = dateFormatter.string(from: Date())
+        let selectedDateString = dateFormatter.string(from: selectedDate)
+
+        return selectedDateString == today
     }
 }

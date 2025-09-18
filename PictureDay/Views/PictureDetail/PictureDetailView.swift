@@ -29,11 +29,10 @@ struct PictureDetailView: View {
                 
                 ScrollView {
                     VStack(spacing: 20) {
-                        // Imagem principal
                         Button(action: {
                             showingFullImage = true
                         }) {
-                            APODImageView(url: apod.url, hdurl: apod.hdurl)
+                            ImageDayView(url: apod.url, hdurl: apod.hdurl)
                                 .frame(maxHeight: 400)
                                 .cornerRadius(12)
                                 .shadow(radius: 10)
@@ -41,7 +40,6 @@ struct PictureDetailView: View {
                         .buttonStyle(PlainButtonStyle())
                         
                         VStack(alignment: .leading, spacing: 16) {
-                            // Título e botão de favorito
                             HStack {
                                 Text(apod.title)
                                     .font(.title)
@@ -60,7 +58,6 @@ struct PictureDetailView: View {
                                 }
                             }
                             
-                            // Data
                             HStack {
                                 Image(systemName: "calendar")
                                     .foregroundColor(.gray)
@@ -69,7 +66,6 @@ struct PictureDetailView: View {
                                     .foregroundColor(.gray)
                             }
                             
-                            // Tipo de mídia
                             HStack {
                                 Image(systemName: apod.mediaType == "image" ? "photo" : "video")
                                     .foregroundColor(.blue)
@@ -78,7 +74,6 @@ struct PictureDetailView: View {
                                     .foregroundColor(.blue)
                             }
                             
-                            // Descrição
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Descrição")
                                     .font(.headline)
@@ -90,7 +85,6 @@ struct PictureDetailView: View {
                                     .lineLimit(nil)
                             }
                             
-                            // Botão para imagem HD (se disponível)
                             if let hdurl = apod.hdurl, apod.mediaType == "image" {
                                 Button(action: {
                                     if let url = URL(string: hdurl) {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct APODImageView: View {
+struct ImageDayView: View {
     let url: String
     let hdurl: String?
     @State private var image: UIImage?

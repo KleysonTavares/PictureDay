@@ -27,14 +27,12 @@ struct PictureDayView: View {
                 } else if let apod = viewModel.currentAPOD {
                     ScrollView {
                         VStack(spacing: 20) {
-                            // Imagem principal
-                            APODImageView(url: apod.url, hdurl: apod.hdurl)
+                            ImageDayView(url: apod.url, hdurl: apod.hdurl)
                                 .frame(maxHeight: 400)
                                 .cornerRadius(12)
                                 .shadow(radius: 10)
                             
                             VStack(alignment: .leading, spacing: 16) {
-                                // Título e botão de favorito
                                 HStack {
                                     Text(apod.title)
                                         .font(.title2)
@@ -53,12 +51,10 @@ struct PictureDayView: View {
                                     }
                                 }
                                 
-                                // Data
                                 Text(formatDateString(apod.date))
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                                 
-                                // Descrição
                                 Text(apod.explanation)
                                     .font(.body)
                                     .foregroundColor(.white)
@@ -100,12 +96,13 @@ struct PictureDayView: View {
                     }
                     .foregroundColor(.white)
                 }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Próximo") {
-                        viewModel.goToNextDay()
+                if !viewModel.isToday() {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Próximo") {
+                            viewModel.goToNextDay()
+                        }
+                        .foregroundColor(.white)
                     }
-                    .foregroundColor(.white)
                 }
                 
                 ToolbarItem(placement: .principal) {
