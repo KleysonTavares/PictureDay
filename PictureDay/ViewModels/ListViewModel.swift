@@ -20,6 +20,8 @@ class ListViewModel: ObservableObject {
     private let apodService: APODServiceProtocol
     private let favoritesService: FavoritesServiceProtocol
     private var cancellables = Set<AnyCancellable>()
+    private var currentDate = Date()
+    private let fetchCount = 10
     
     init(apodService: APODServiceProtocol = APODService(),
          favoritesService: FavoritesServiceProtocol) {
@@ -31,10 +33,10 @@ class ListViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let endDate = Date()
+        let endDate = currentDate
         let startDate = Calendar.current.date(byAdding: .day, value: -19, to: endDate) ?? endDate
         
-        apodService.fetchAPODRange(startDate: startDate, endDate: endDate)
+        apodService.fetchAPODByCount(count: fetchCount)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [weak self] completion in
@@ -44,12 +46,23 @@ class ListViewModel: ObservableObject {
                     }
                 },
                 receiveValue: { [weak self] apodList in
-                    self?.apodList = apodList.sorted { $0.date > $1.date }
-                    self?.checkFavoriteStatuses()
+                    guard let self = self else { return }
+                    
+                    let newItems = apodList.filter { newItem in
+                        !self.apodList.contains(where: { $0.date == newItem.date })
+                    }
+                    self.apodList.append(contentsOf: newItems)
+                    self.apodList.sort { $0.date > $1.date }
+                    self.checkFavoriteStatuses()
+                    
+                    if let oldestDateString = apodList.sorted(by: { $0.date < $1.date }).first?.date,
+                        let oldestDate = self.dateFormatter().date(from: oldestDateString) {
+                        self.currentDate = Calendar.current.date(byAdding: .day, value: -1, to: oldestDate) ?? Date()
+                    }
                 }
             )
             .store(in: &cancellables)
-    }
+            }
     
     func toggleFavorite(for apod: APODModel) {
         let isCurrentlyFavorite = favoriteStatuses[apod.date] ?? false
@@ -114,4 +127,10 @@ class ListViewModel: ObservableObject {
     func isFavorite(_ apod: APODModel) -> Bool {
         return favoriteStatuses[apod.date] ?? false
     }
+    
+    func dateFormatter() -> DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter
+        }
 }
