@@ -34,9 +34,8 @@ class ListViewModel: ObservableObject {
         errorMessage = nil
         
         let endDate = currentDate
-        let startDate = Calendar.current.date(byAdding: .day, value: -19, to: endDate) ?? endDate
-        
-        apodService.fetchAPODByCount(count: fetchCount)
+        let startDate = Calendar.current.date(byAdding: .day, value: -(fetchCount - 1), to: endDate) ?? endDate
+        apodService.fetchAPODRange(startDate: startDate, endDate: endDate)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [weak self] completion in

@@ -79,7 +79,8 @@ struct ListRowView: View {
     }
     
     private func loadThumbnail() {
-        guard let imageURL = URL(string: apod.url) else { return }
+        guard let url = apod.url else { return }
+        guard let imageURL = URL(string: url) else { return }
         
         URLSession.shared.dataTask(with: imageURL) { data, response, error in
             DispatchQueue.main.async {

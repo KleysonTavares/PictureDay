@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImageDayView: View {
-    let url: String
+    let url: String?
     let hdurl: String?
     @State private var image: UIImage?
     @State private var isLoading = true
@@ -40,6 +40,7 @@ struct ImageDayView: View {
     }
 
     private func loadImage() {
+        guard let url = url else { return }
         guard let imageURL = URL(string: url) else {
             error = TypeError.invalidURL
             isLoading = false
