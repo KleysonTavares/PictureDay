@@ -26,7 +26,7 @@ struct FavoritesView: View {
                         .font(.headline)
                 } else if viewModel.favorites.isEmpty {
                     VStack(spacing: 20) {
-                        Image(systemName: "heart")
+                        Image(systemName: "star")
                             .font(.system(size: 50))
                             .foregroundColor(.gray)
                         

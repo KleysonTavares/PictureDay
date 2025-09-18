@@ -64,8 +64,8 @@ struct ListRowView: View {
                 Button(action: {
                     onFavoriteToggle()
                 }) {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(isFavorite ? .red : .white)
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                        .foregroundColor(isFavorite ? .yellow : .white)
                         .font(.title3)
                 }
                 .buttonStyle(PlainButtonStyle())

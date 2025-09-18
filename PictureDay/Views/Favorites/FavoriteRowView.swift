@@ -63,8 +63,8 @@ struct FavoriteRowView: View {
                 Button(action: {
                     onRemove()
                 }) {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(.red)
+                    Image(systemName: "star.fill")
+                        .foregroundColor(.yellow)
                         .font(.title3)
                 }
                 .buttonStyle(PlainButtonStyle())

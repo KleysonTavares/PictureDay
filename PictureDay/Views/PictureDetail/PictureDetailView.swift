@@ -52,8 +52,8 @@ struct PictureDetailView: View {
                                 Button(action: {
                                     viewModel.toggleFavorite()
                                 }) {
-                                    Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
-                                        .foregroundColor(viewModel.isFavorite ? .red : .white)
+                                    Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
+                                        .foregroundColor(viewModel.isFavorite ? .yellow : .white)
                                         .font(.title2)
                                 }
                             }

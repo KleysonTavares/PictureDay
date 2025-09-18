@@ -34,7 +34,7 @@ struct ContentView: View {
             
             FavoritesView(favoritesService: favoritesService)
                 .tabItem {
-                    Image(systemName: "heart.fill")
+                    Image(systemName: "star.fill")
                     Text("Favoritos")
                 }
                 .tag(2)
