@@ -19,6 +19,7 @@
 /* Begin PBXFileReference section */
 		DFE80FFC2E7A391600FA4162 /* PictureDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PictureDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFE8100E2E7A391800FA4162 /* PictureDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PictureDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFE88B5F2E7DFBAC00616E4C /* PictureDay.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PictureDay.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,6 +56,7 @@
 		DFE80FF32E7A391600FA4162 = {
 			isa = PBXGroup;
 			children = (
+				DFE88B5F2E7DFBAC00616E4C /* PictureDay.xctestplan */,
 				DFE80FFE2E7A391600FA4162 /* PictureDay */,
 				DFE810112E7A391800FA4162 /* PictureDayTests */,
 				DFE80FFD2E7A391600FA4162 /* Products */,

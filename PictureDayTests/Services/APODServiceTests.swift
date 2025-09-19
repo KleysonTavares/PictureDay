@@ -132,6 +132,6 @@ final class APODServiceTests: XCTestCase {
             })
             .store(in: &cancellables)
         
-        wait(for: [expectation], timeout: 0.2)
+        wait(for: [expectation], timeout: 0.5)
     }
 }

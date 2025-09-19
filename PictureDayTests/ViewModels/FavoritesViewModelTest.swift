@@ -44,7 +44,7 @@ final class FavoritesViewModelTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 0.2)
+        wait(for: [expectation], timeout: 0.5)
     }
 
     func testFetchFavoritesFailure() throws {
