@@ -46,10 +46,11 @@ class ListViewModel: ObservableObject {
                 },
                 receiveValue: { [weak self] apodList in
                     guard let self = self else { return }
-                    
-                    let newItems = apodList.filter { newItem in
+                    let filteredList = apodList.filter { $0.mediaType == "image" }
+                    let newItems = filteredList.filter { newItem in
                         !self.apodList.contains(where: { $0.date == newItem.date })
                     }
+
                     self.apodList.append(contentsOf: newItems)
                     self.apodList.sort { $0.date > $1.date }
                     self.checkFavoriteStatuses()
