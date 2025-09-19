@@ -29,7 +29,7 @@ final class PictureDayViewModelTests: XCTestCase {
 
         viewModel.fetchAPOD()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertNotNil(viewModel.currentAPOD)
             XCTAssertEqual(viewModel.currentAPOD?.title, "Test Title")
             XCTAssertFalse(viewModel.isLoading)
@@ -54,7 +54,7 @@ final class PictureDayViewModelTests: XCTestCase {
 
         viewModel.fetchAPOD()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertFalse(viewModel.isLoading)
             XCTAssertNotNil(viewModel.errorMessage)
             XCTAssertNil(viewModel.currentAPOD)
@@ -72,12 +72,12 @@ final class PictureDayViewModelTests: XCTestCase {
         
         viewModel.fetchAPOD()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertFalse(viewModel.isFavorite)
             
             viewModel.toggleFavorite()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 XCTAssertTrue(viewModel.isFavorite)
                 expectation.fulfill()
             }
@@ -96,12 +96,12 @@ final class PictureDayViewModelTests: XCTestCase {
         mockFavoritesService.addToFavorites(apod).sink(receiveCompletion: {_ in}, receiveValue: {_ in}).store(in: &cancellables)
         viewModel.fetchAPOD()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             XCTAssertTrue(viewModel.isFavorite)
             
             viewModel.toggleFavorite()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 XCTAssertFalse(viewModel.isFavorite)
                 expectation.fulfill()
             }

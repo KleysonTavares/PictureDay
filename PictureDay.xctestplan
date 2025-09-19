@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "3054AB84-7B80-4AD5-8532-5D5FF0E63096",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PictureDay.xcodeproj",
+      "identifier" : "DFE80FFB2E7A391600FA4162",
+      "name" : "PictureDay"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:PictureDay.xcodeproj",
+        "identifier" : "DFE8100D2E7A391800FA4162",
+        "name" : "PictureDayTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PictureDay.xcodeproj",
+        "identifier" : "DFE810172E7A391800FA4162",
+        "name" : "PictureDayUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
