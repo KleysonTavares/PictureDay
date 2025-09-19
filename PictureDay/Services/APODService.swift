@@ -44,29 +44,22 @@ class APODService: APODServiceProtocol {
     }
     
     func fetchAPODRange(startDate: Date, endDate: Date) -> AnyPublisher<[APODModel], TypeError> {
-        guard let url = ServiceConfig.url(for: nil) else {
-            return Fail(error: TypeError.invalidURL)
-                .eraseToAnyPublisher()
-        }
-        
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        var components = URLComponents(string: ServiceConfig.baseURL)
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        
-        let existingQueryItems = components?.queryItems ?? []
-        let newQueryItems = [
+
+        var queryItems = [
+            URLQueryItem(name: "api_key", value: ServiceConfig.apiKey),
             URLQueryItem(name: "start_date", value: formatter.string(from: startDate)),
             URLQueryItem(name: "end_date", value: formatter.string(from: endDate))
         ]
-        
-        components?.queryItems = existingQueryItems + newQueryItems
-        
-        guard let finalURL = components?.url else {
-            return Fail(error: TypeError.invalidURL)
-                .eraseToAnyPublisher()
+        components?.queryItems = queryItems
+
+        guard let url = components?.url else {
+            return Fail(error: TypeError.invalidURL).eraseToAnyPublisher()
         }
         
-        return session.dataTaskPublisher(for: finalURL)
+        return session.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: [APODModel].self, decoder: decoder)
             .mapError { error in

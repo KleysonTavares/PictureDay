@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct FullScreenImageView: View {
-    let url: String
+    let url: String?
     let hdurl: String?
     @Environment(\.dismiss) private var dismiss
     @State private var image: UIImage?
@@ -89,6 +89,7 @@ struct FullScreenImageView: View {
     }
     
     private func loadImage() {
+        guard let url = url else { return }
         let imageURLString = hdurl ?? url
         guard let imageURL = URL(string: imageURLString) else {
             isLoading = false

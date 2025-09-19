@@ -20,7 +20,7 @@ struct ListView: View {
             ZStack {
                 Color.black.ignoresSafeArea()
                 
-                if viewModel.isLoading {
+                if viewModel.apodList.isEmpty && viewModel.isLoading {
                     ProgressView("Carregando fotos...")
                         .foregroundColor(.white)
                         .font(.headline)
@@ -55,13 +55,26 @@ struct ListView: View {
                             )
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
+                            .onAppear {
+                                if apod.id == viewModel.apodList.last?.id {
+                                    viewModel.fetchAPODList()
+                                }
+                            }
+                        }
+                        
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .padding()
+                                .frame(maxWidth: .infinity)
                         }
                     }
                     .listStyle(PlainListStyle())
                     .refreshable {
+                        // Reset e recarregar a lista
+                        viewModel.apodList = []
                         viewModel.fetchAPODList()
                     }
-                }
+                                }
                 
                 if let errorMessage = viewModel.errorMessage {
                     VStack {
@@ -78,7 +91,9 @@ struct ListView: View {
             .navigationTitle("Fotos da NASA")
             .navigationBarTitleDisplayMode(.large)
             .onAppear {
-                viewModel.fetchAPODList()
+                if viewModel.apodList.isEmpty {
+                    viewModel.fetchAPODList()
+                }
             }
             .sheet(item: $selectedAPOD) { apod in
                 PictureDetailView(apod: apod, favoritesService: MockFavoritesService())
