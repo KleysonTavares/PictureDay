@@ -8,7 +8,7 @@ Um aplicativo iOS que consome a API pública da NASA APOD (Astronomy Picture of 
 
 1. **Foto do Dia** - Exibe a foto astronômica do dia com título e descrição
 2. **Navegação Temporal** - Navegar para dias anteriores e posteriores
-3. **Lista de Fotos** - Visualizar as últimas 20 fotos disponíveis
+3. **Lista de Fotos** - Visualizar as últimas 10 fotos disponíveis com scroll inifinito carregando a cada 10 imagens
 4. **Detalhes da Foto** - Tela dedicada com imagem em tamanho maior, título, descrição e data
 5. **Sistema de Favoritos** - Salvar fotos favoritas localmente usando Core Data
 6. **Tela de Favoritos** - Visualizar todas as fotos favoritadas
