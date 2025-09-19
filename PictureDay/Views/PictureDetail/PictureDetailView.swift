@@ -66,14 +66,6 @@ struct PictureDetailView: View {
                                     .foregroundColor(.gray)
                             }
                             
-                            HStack {
-                                Image(systemName: apod.mediaType == "image" ? "photo" : "video")
-                                    .foregroundColor(.blue)
-                                Text(apod.mediaType == "image" ? "Imagem" : "Vídeo")
-                                    .font(.subheadline)
-                                    .foregroundColor(.blue)
-                            }
-                            
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Descrição")
                                     .font(.headline)
