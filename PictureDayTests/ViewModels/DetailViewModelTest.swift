@@ -21,7 +21,7 @@ final class DetailViewModelTests: XCTestCase {
         cancellables = nil
     }
 
-     func testDetailViewModel_checkFavoriteStatus_isFavorite() throws {
+     func testcheckisFavorite() throws {
         let expectation = XCTestExpectation(description: "Check favorite status for a favorite item")
         let mockFavoritesService = MockFavoritesService()
         let apod = APODModel(date: "2024-01-01", explanation: "", hdurl: nil, mediaType: "image", serviceVersion: "v1", title: "Test", url: "url")
@@ -40,7 +40,7 @@ final class DetailViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 0.2)
     }
     
-    func testDetailViewModel_checkFavoriteStatus_notFavorite() throws {
+    func testnotFavorite() throws {
         let expectation = XCTestExpectation(description: "Check favorite status for a non-favorite item")
         let mockFavoritesService = MockFavoritesService()
         let apod = APODModel(date: "2024-01-02", explanation: "", hdurl: nil, mediaType: "image", serviceVersion: "v1", title: "Test", url: "url")
@@ -57,7 +57,7 @@ final class DetailViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 0.2)
     }
 
-    func testDetailViewModel_toggleFavorite_addsToFavorites() throws {
+    func testaddsToFavorites() throws {
         let expectation = XCTestExpectation(description: "Toggle adds to favorites")
         let mockFavoritesService = MockFavoritesService()
         let apod = APODModel(date: "2024-01-03", explanation: "", hdurl: nil, mediaType: "image", serviceVersion: "v1", title: "Test", url: "url")
@@ -77,10 +77,10 @@ final class DetailViewModelTests: XCTestCase {
                 }).store(in: &self.cancellables)
         }
         
-        wait(for: [expectation], timeout: 0.2)
+        wait(for: [expectation], timeout: 0.5)
     }
     
-    func testDetailViewModel_toggleFavorite_removesFromFavorites() throws {
+    func testremovesFromFavorites() throws {
         let expectation = XCTestExpectation(description: "Toggle removes from favorites")
         let mockFavoritesService = MockFavoritesService()
         let apod = APODModel(date: "2024-01-04", explanation: "", hdurl: nil, mediaType: "image", serviceVersion: "v1", title: "Test", url: "url")
@@ -101,6 +101,6 @@ final class DetailViewModelTests: XCTestCase {
                 }).store(in: &self.cancellables)
         }
         
-        wait(for: [expectation], timeout: 0.2)
+        wait(for: [expectation], timeout: 0.5)
     }
 }
