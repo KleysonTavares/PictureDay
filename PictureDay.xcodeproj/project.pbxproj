@@ -22,6 +22,23 @@
 		DFE88B5F2E7DFBAC00616E4C /* PictureDay.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PictureDay.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DF658B3D2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDay" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Mocks/MockFavoritesService.swift,
+			);
+			target = DFE80FFB2E7A391600FA4162 /* PictureDay */;
+		};
+		DF658B3E2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDayTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Mocks/MockFavoritesService.swift,
+			);
+			target = DFE8100D2E7A391800FA4162 /* PictureDayTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DFE80FFE2E7A391600FA4162 /* PictureDay */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -30,6 +47,10 @@
 		};
 		DFE810112E7A391800FA4162 /* PictureDayTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DF658B3D2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDay" target */,
+				DF658B3E2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDayTests" target */,
+			);
 			path = PictureDayTests;
 			sourceTree = "<group>";
 		};

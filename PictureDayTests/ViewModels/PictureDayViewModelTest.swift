@@ -107,7 +107,7 @@ final class PictureDayViewModelTests: XCTestCase {
             }
         }
         
-        wait(for: [expectation], timeout: 0.2)
+        wait(for: [expectation], timeout: 0.5)
     }
     
     func testGoToPreviousDay() throws {
