@@ -17,7 +17,7 @@ protocol FavoritesServiceProtocol {
 }
 
 class FavoritesService: FavoritesServiceProtocol {
-    private let context: NSManagedObjectContext
+    let context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
         self.context = context
