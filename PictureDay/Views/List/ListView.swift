@@ -71,12 +71,7 @@ struct ListView: View {
                         }
                     }
                     .listStyle(PlainListStyle())
-                    .refreshable {
-                        // Reset e recarregar a lista
-                        viewModel.apodList = []
-                        viewModel.fetchAPODList()
-                    }
-                                }
+                }
                 
                 if let errorMessage = viewModel.errorMessage {
                     VStack {
