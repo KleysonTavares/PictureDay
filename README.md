@@ -21,8 +21,8 @@ Um aplicativo iOS que consome a API pública da NASA APOD (Astronomy Picture of 
 
 O aplicativo segue a arquitetura MVVM para garantir separação clara de responsabilidades:
 
-- **Models**: `APODModel`, `TypeError
-- **Views**: `APODMainView`, `APODListView`, `APODDetailView`, `FavoritesView
+- **Models**: `APODModel`, `TypeError`
+- **Views**: `APODMainView`, `APODListView`, `APODDetailView`, `FavoritesView`
 - **ViewModels**: `PictureDayViewModel`, `ListViewModel`, `FavoritesViewModel`, `DetailViewModel`
 - **Services**: `APODService`, `FavoritesService`, `ServiceConfig`, `ImageLoader`
 
@@ -161,46 +161,46 @@ xcodebuild test -scheme PictureDay -destination 'platform=iOS Simulator,name=iPh
 
 ### Funcionalidades Futuras
 
+1. **Criptografia da apiKey**
+   - a apiKey ficou oculta no arquivo Secrets, porém ficou exposta no github, o ideal é manter a mesma criptografada no projeto
+
+2. **Cache de Imagens**
+   - Implementar cache local para melhor performance
+   - Reduzir uso de dados móveis
+
+3. **Compartilhamento**
+   - Permitir compartilhar fotos via redes sociais
+   - Salvar imagens no álbum do dispositivo
+
+4. **Notificações**
+   - Notificar sobre nova foto do dia
+   - Lembretes personalizáveis
+
+5. **Modo Offline**
+   - Cache inteligente para uso sem internet
+   - Sincronização quando conectado
+
+### Melhorias Técnicas
+
 1. **LaunchScreen**
    - Criar um Storyboard com a animação e apontar o mesmo no project
    
 2. **Atualizar lista**
    - após clicar para ver o detalhe de uma imagen na tela de lista e marcar a imagem como favorito, atualizar a lista de favoritos com o coredata sem fazer uma chamada de rede.
 
-3. **Criptografia da apiKey**
-   - a apiKey ficou oculta no arquivo Secrets, porém ficou exposta no github, o ideal é manter a mesma criptografada no projeto
-
-4. **Cache de Imagens**
-   - Implementar cache local para melhor performance
-   - Reduzir uso de dados móveis
-
-5. **Compartilhamento**
-   - Permitir compartilhar fotos via redes sociais
-   - Salvar imagens no álbum do dispositivo
-
-6. **Notificações**
-   - Notificar sobre nova foto do dia
-   - Lembretes personalizáveis
-
-7. **Modo Offline**
-   - Cache inteligente para uso sem internet
-   - Sincronização quando conectado
-
-### Melhorias Técnicas
-
-1. **Performance**
+3. **Performance**
    - Implementar lazy loading para listas grandes
    - Otimizar carregamento de imagens
 
-2. **Acessibilidade**
+4. **Acessibilidade**
    - Adicionar VoiceOver support
    - Melhorar contraste e legibilidade
 
-3. **Internacionalização**
+5. **Internacionalização**
    - Suporte a múltiplos idiomas
    - Localização de datas e textos
 
-4. **Testes**
+6. **Testes**
    - Adicionar testes de UI
    - Implementar testes de integração
 
