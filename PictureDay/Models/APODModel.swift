@@ -8,7 +8,6 @@
 import Foundation
 
 struct APODModel: Codable, Identifiable {
-    let id = UUID()
     let date: String
     let explanation: String
     let hdurl: String?
@@ -16,6 +15,7 @@ struct APODModel: Codable, Identifiable {
     let serviceVersion: String
     let title: String
     let url: String?
+    var id: String { date }
     
     enum CodingKeys: String, CodingKey {
         case date

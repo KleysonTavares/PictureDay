@@ -10,8 +10,10 @@ import SwiftUI
 struct ListView: View {
     @StateObject private var viewModel: ListViewModel
     @State private var selectedAPOD: APODModel?
+    private let favoritesService: FavoritesServiceProtocol
     
     init(favoritesService: FavoritesServiceProtocol) {
+        self.favoritesService = favoritesService
         self._viewModel = StateObject(wrappedValue: ListViewModel(favoritesService: favoritesService))
     }
     
@@ -96,12 +98,8 @@ struct ListView: View {
                 }
             }
             .sheet(item: $selectedAPOD) { apod in
-                PictureDetailView(apod: apod, favoritesService: MockFavoritesService())
+                PictureDetailView(apod: apod, favoritesService: favoritesService)
             }
         }
     }
-}
-
-#Preview {
-    ListView(favoritesService: MockFavoritesService())
 }

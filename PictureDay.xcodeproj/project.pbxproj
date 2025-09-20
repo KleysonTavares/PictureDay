@@ -14,20 +14,30 @@
 			remoteGlobalIDString = DFE80FFB2E7A391600FA4162;
 			remoteInfo = PictureDay;
 		};
-		DFE810192E7A391800FA4162 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DFE80FF42E7A391600FA4162 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DFE80FFB2E7A391600FA4162;
-			remoteInfo = PictureDay;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DFE80FFC2E7A391600FA4162 /* PictureDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PictureDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFE8100E2E7A391800FA4162 /* PictureDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PictureDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		DFE810182E7A391800FA4162 /* PictureDayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PictureDayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFE88B5F2E7DFBAC00616E4C /* PictureDay.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = PictureDay.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DF658B3D2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDay" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Mocks/MockFavoritesService.swift,
+			);
+			target = DFE80FFB2E7A391600FA4162 /* PictureDay */;
+		};
+		DF658B3E2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDayTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Mocks/MockFavoritesService.swift,
+			);
+			target = DFE8100D2E7A391800FA4162 /* PictureDayTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DFE80FFE2E7A391600FA4162 /* PictureDay */ = {
@@ -37,12 +47,11 @@
 		};
 		DFE810112E7A391800FA4162 /* PictureDayTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DF658B3D2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDay" target */,
+				DF658B3E2E7E21AA000FD9FB /* Exceptions for "PictureDayTests" folder in "PictureDayTests" target */,
+			);
 			path = PictureDayTests;
-			sourceTree = "<group>";
-		};
-		DFE8101B2E7A391800FA4162 /* PictureDayUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PictureDayUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,22 +71,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DFE810152E7A391800FA4162 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		DFE80FF32E7A391600FA4162 = {
 			isa = PBXGroup;
 			children = (
+				DFE88B5F2E7DFBAC00616E4C /* PictureDay.xctestplan */,
 				DFE80FFE2E7A391600FA4162 /* PictureDay */,
 				DFE810112E7A391800FA4162 /* PictureDayTests */,
-				DFE8101B2E7A391800FA4162 /* PictureDayUITests */,
 				DFE80FFD2E7A391600FA4162 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +89,6 @@
 			children = (
 				DFE80FFC2E7A391600FA4162 /* PictureDay.app */,
 				DFE8100E2E7A391800FA4162 /* PictureDayTests.xctest */,
-				DFE810182E7A391800FA4162 /* PictureDayUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,29 +141,6 @@
 			productReference = DFE8100E2E7A391800FA4162 /* PictureDayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		DFE810172E7A391800FA4162 /* PictureDayUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DFE810282E7A391800FA4162 /* Build configuration list for PBXNativeTarget "PictureDayUITests" */;
-			buildPhases = (
-				DFE810142E7A391800FA4162 /* Sources */,
-				DFE810152E7A391800FA4162 /* Frameworks */,
-				DFE810162E7A391800FA4162 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DFE8101A2E7A391800FA4162 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				DFE8101B2E7A391800FA4162 /* PictureDayUITests */,
-			);
-			name = PictureDayUITests;
-			packageProductDependencies = (
-			);
-			productName = PictureDayUITests;
-			productReference = DFE810182E7A391800FA4162 /* PictureDayUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,10 +155,6 @@
 						CreatedOnToolsVersion = 16.4;
 					};
 					DFE8100D2E7A391800FA4162 = {
-						CreatedOnToolsVersion = 16.4;
-						TestTargetID = DFE80FFB2E7A391600FA4162;
-					};
-					DFE810172E7A391800FA4162 = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = DFE80FFB2E7A391600FA4162;
 					};
@@ -202,7 +176,6 @@
 			targets = (
 				DFE80FFB2E7A391600FA4162 /* PictureDay */,
 				DFE8100D2E7A391800FA4162 /* PictureDayTests */,
-				DFE810172E7A391800FA4162 /* PictureDayUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +189,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DFE8100C2E7A391800FA4162 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DFE810162E7A391800FA4162 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,13 +212,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DFE810142E7A391800FA4162 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,11 +219,6 @@
 			isa = PBXTargetDependency;
 			target = DFE80FFB2E7A391600FA4162 /* PictureDay */;
 			targetProxy = DFE8100F2E7A391800FA4162 /* PBXContainerItemProxy */;
-		};
-		DFE8101A2E7A391800FA4162 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DFE80FFB2E7A391600FA4162 /* PictureDay */;
-			targetProxy = DFE810192E7A391800FA4162 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -400,11 +354,11 @@
 				DEVELOPMENT_TEAM = 48VXLBS5Z4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -428,11 +382,11 @@
 				DEVELOPMENT_TEAM = 48VXLBS5Z4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -484,40 +438,6 @@
 			};
 			name = Release;
 		};
-		DFE810292E7A391800FA4162 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 48VXLBS5Z4;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = DosSantos.PictureDayUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PictureDay;
-			};
-			name = Debug;
-		};
-		DFE8102A2E7A391800FA4162 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 48VXLBS5Z4;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = DosSantos.PictureDayUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PictureDay;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -544,15 +464,6 @@
 			buildConfigurations = (
 				DFE810262E7A391800FA4162 /* Debug */,
 				DFE810272E7A391800FA4162 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DFE810282E7A391800FA4162 /* Build configuration list for PBXNativeTarget "PictureDayUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DFE810292E7A391800FA4162 /* Debug */,
-				DFE8102A2E7A391800FA4162 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

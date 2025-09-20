@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct PictureDetailView: View {
     let apod: APODModel
@@ -19,7 +18,9 @@ struct PictureDetailView: View {
     init(apod: APODModel, favoritesService: FavoritesServiceProtocol) {
         self.apod = apod
         self.favoritesService = favoritesService
-        self._viewModel = StateObject(wrappedValue: DetailViewModel(apod: apod, favoritesService: favoritesService))
+        self._viewModel = StateObject(
+            wrappedValue: DetailViewModel(apod: apod, favoritesService: favoritesService)
+        )
     }
     
     var body: some View {
@@ -29,9 +30,7 @@ struct PictureDetailView: View {
                 
                 ScrollView {
                     VStack(spacing: 20) {
-                        Button(action: {
-                            showingFullImage = true
-                        }) {
+                        Button(action: { showingFullImage = true }) {
                             ImageDayView(url: apod.url, hdurl: apod.hdurl)
                                 .frame(maxHeight: 400)
                                 .cornerRadius(12)
@@ -45,13 +44,10 @@ struct PictureDetailView: View {
                                     .font(.title)
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
-                                    .multilineTextAlignment(.leading)
                                 
                                 Spacer()
                                 
-                                Button(action: {
-                                    viewModel.toggleFavorite()
-                                }) {
+                                Button(action: { viewModel.toggleFavorite() }) {
                                     Image(systemName: viewModel.isFavorite ? "star.fill" : "star")
                                         .foregroundColor(viewModel.isFavorite ? .yellow : .white)
                                         .font(.title2)
@@ -59,29 +55,20 @@ struct PictureDetailView: View {
                             }
                             
                             HStack {
-                                Image(systemName: "calendar")
-                                    .foregroundColor(.gray)
+                                Image(systemName: "calendar").foregroundColor(.gray)
                                 Text(formatDate(apod.date))
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                             }
                             
                             VStack(alignment: .leading, spacing: 8) {
-                                Text("Descrição")
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                
-                                Text(apod.explanation)
-                                    .font(.body)
-                                    .foregroundColor(.white)
-                                    .lineLimit(nil)
+                                Text("Descrição").font(.headline).foregroundColor(.white)
+                                Text(apod.explanation).font(.body).foregroundColor(.white)
                             }
                             
                             if let hdurl = apod.hdurl, apod.mediaType == "image" {
                                 Button(action: {
-                                    if let url = URL(string: hdurl) {
-                                        UIApplication.shared.open(url)
-                                    }
+                                    if let url = URL(string: hdurl) { UIApplication.shared.open(url) }
                                 }) {
                                     HStack {
                                         Image(systemName: "arrow.up.right.square")
@@ -102,10 +89,7 @@ struct PictureDetailView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Fechar") {
-                        dismiss()
-                    }
-                    .foregroundColor(.white)
+                    Button("Fechar") { dismiss() }.foregroundColor(.white)
                 }
             }
             .fullScreenCover(isPresented: $showingFullImage) {
@@ -120,26 +104,8 @@ struct PictureDetailView: View {
     private func formatDate(_ dateString: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = formatter.date(from: dateString) else {
-            return dateString
-        }
-        
+        guard let date = formatter.date(from: dateString) else { return dateString }
         formatter.dateFormat = "dd/MM/yyyy"
         return formatter.string(from: date)
     }
-}
-
-#Preview {
-    let sampleAPOD = APODModel(
-        date: "2024-01-01",
-        explanation: "Esta é uma descrição de exemplo para a foto do dia da NASA.",
-        hdurl: "https://example.com/hd-image.jpg",
-        mediaType: "image",
-        serviceVersion: "v1",
-        title: "Foto de Exemplo da NASA",
-        url: "https://example.com/image.jpg"
-    )
-    
-    return PictureDetailView(apod: sampleAPOD, favoritesService: MockFavoritesService())
 }

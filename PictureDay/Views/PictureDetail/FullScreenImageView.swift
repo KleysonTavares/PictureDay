@@ -5,15 +5,13 @@
 //  Created by Kleyson Tavares on 16/09/25.
 //
 
-import Foundation
 import SwiftUI
 
 struct FullScreenImageView: View {
     let url: String?
     let hdurl: String?
     @Environment(\.dismiss) private var dismiss
-    @State private var image: UIImage?
-    @State private var isLoading = true
+    @StateObject private var imageLoader = ImageLoader()
     @State private var scale: CGFloat = 1.0
     @State private var offset: CGSize = .zero
     @State private var lastOffset: CGSize = .zero
@@ -22,7 +20,7 @@ struct FullScreenImageView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             
-            if let image = image {
+            if let image = imageLoader.image {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -54,7 +52,7 @@ struct FullScreenImageView: View {
                                 lastOffset = offset
                             }
                     )
-            } else if isLoading {
+            } else if imageLoader.isLoading {
                 ProgressView("Carregando...")
                     .foregroundColor(.white)
                     .font(.headline)
@@ -84,25 +82,7 @@ struct FullScreenImageView: View {
             .padding()
         }
         .onAppear {
-            loadImage()
+            imageLoader.loadImage(from: hdurl ?? url)
         }
-    }
-    
-    private func loadImage() {
-        guard let url = url else { return }
-        let imageURLString = hdurl ?? url
-        guard let imageURL = URL(string: imageURLString) else {
-            isLoading = false
-            return
-        }
-        
-        URLSession.shared.dataTask(with: imageURL) { data, response, error in
-            DispatchQueue.main.async {
-                if let data = data, let uiImage = UIImage(data: data) {
-                    self.image = uiImage
-                }
-                self.isLoading = false
-            }
-        }.resume()
     }
 }

@@ -10,8 +10,10 @@ import SwiftUI
 struct FavoritesView: View {
     @StateObject private var viewModel: FavoritesViewModel
     @State private var selectedAPOD: APODModel?
+    private let favoritesService: FavoritesServiceProtocol
     
     init(favoritesService: FavoritesServiceProtocol) {
+        self.favoritesService = favoritesService
         self._viewModel = StateObject(wrappedValue: FavoritesViewModel(favoritesService: favoritesService))
     }
     
@@ -81,12 +83,8 @@ struct FavoritesView: View {
                 viewModel.fetchFavorites()
             }
             .sheet(item: $selectedAPOD) { apod in
-                PictureDetailView(apod: apod, favoritesService: MockFavoritesService())
+                PictureDetailView(apod: apod, favoritesService: favoritesService)
             }
         }
     }
-}
-
-#Preview {
-    FavoritesView(favoritesService: MockFavoritesService())
 }

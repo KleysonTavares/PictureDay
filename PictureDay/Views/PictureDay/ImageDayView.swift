@@ -10,17 +10,15 @@ import SwiftUI
 struct ImageDayView: View {
     let url: String?
     let hdurl: String?
-    @State private var image: UIImage?
-    @State private var isLoading = true
-    @State private var error: Error?
+    @StateObject private var imageLoader = ImageLoader()
 
     var body: some View {
         Group {
-            if let image = image {
+            if let image = imageLoader.image {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-            } else if isLoading {
+            } else if imageLoader.isLoading {
                 ProgressView()
                     .frame(height: 200)
             } else {
@@ -35,35 +33,7 @@ struct ImageDayView: View {
             }
         }
         .onAppear {
-            loadImage()
+            imageLoader.loadImage(from: hdurl ?? url)
         }
-    }
-
-    private func loadImage() {
-        guard let url = url else { return }
-        guard let imageURL = URL(string: url) else {
-            error = TypeError.invalidURL
-            isLoading = false
-            return
-        }
-        
-        URLSession.shared.dataTask(with: imageURL) { data, response, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.error = error
-                    self.isLoading = false
-                    return
-                }
-                
-                guard let data = data, let uiImage = UIImage(data: data) else {
-                    self.error = TypeError.noData
-                    self.isLoading = false
-                    return
-                }
-                
-                self.image = uiImage
-                self.isLoading = false
-            }
-        }.resume()
     }
 }

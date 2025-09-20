@@ -13,19 +13,17 @@ struct ListRowView: View {
     let onFavoriteToggle: () -> Void
     let onTap: () -> Void
     
-    @State private var thumbnailImage: UIImage?
-    @State private var isLoadingImage = true
+    @StateObject private var imageLoader = ImageLoader()
     
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 12) {
-                // Thumbnail da imagem
                 Group {
-                    if let image = thumbnailImage {
+                    if let image = imageLoader.image {
                         Image(uiImage: image)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
-                    } else if isLoadingImage {
+                    } else if imageLoader.isLoading {
                         ProgressView()
                             .frame(width: 80, height: 80)
                     } else {
@@ -74,22 +72,8 @@ struct ListRowView: View {
         }
         .buttonStyle(PlainButtonStyle())
         .onAppear {
-            loadThumbnail()
+            imageLoader.loadImage(from: apod.url)
         }
-    }
-    
-    private func loadThumbnail() {
-        guard let url = apod.url else { return }
-        guard let imageURL = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: imageURL) { data, response, error in
-            DispatchQueue.main.async {
-                if let data = data, let uiImage = UIImage(data: data) {
-                    self.thumbnailImage = uiImage
-                }
-                self.isLoadingImage = false
-            }
-        }.resume()
     }
     
     private func formatDate(_ dateString: String) -> String {
