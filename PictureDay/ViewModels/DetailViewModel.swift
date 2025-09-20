@@ -12,24 +12,26 @@ import Combine
 class DetailViewModel: ObservableObject {
     @Published var isFavorite = false
     
-    private let apod: APODModel
+    let apod: APODModel
     private let favoritesService: FavoritesServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     
     init(apod: APODModel, favoritesService: FavoritesServiceProtocol) {
         self.apod = apod
         self.favoritesService = favoritesService
+        checkFavoriteStatus()
     }
     
     func checkFavoriteStatus() {
         favoritesService.isFavorite(apod)
             .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { [weak self] isFav in
-                    self?.isFavorite = isFav
+            .sink { completion in
+                if case let .failure(error) = completion {
+                    print("❌ Erro ao checar favorito:", error)
                 }
-            )
+            } receiveValue: { isFav in
+                self.isFavorite = isFav
+            }
             .store(in: &cancellables)
     }
     
@@ -44,28 +46,18 @@ class DetailViewModel: ObservableObject {
     private func addToFavorites() {
         favoritesService.addToFavorites(apod)
             .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { [weak self] success in
-                    if success {
-                        self?.isFavorite = true
-                    }
-                }
-            )
+            .sink { _ in } receiveValue: { success in
+                if success { self.isFavorite = true }
+            }
             .store(in: &cancellables)
     }
     
     private func removeFromFavorites() {
         favoritesService.removeFromFavorites(apod)
             .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { [weak self] success in
-                    if success {
-                        self?.isFavorite = false
-                    }
-                }
-            )
+            .sink { _ in } receiveValue: { success in
+                if success { self.isFavorite = false }
+            }
             .store(in: &cancellables)
     }
 }
