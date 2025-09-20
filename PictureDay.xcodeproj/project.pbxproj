@@ -37,11 +37,21 @@
 			);
 			target = DFE8100D2E7A391800FA4162 /* PictureDayTests */;
 		};
+		DF98EF872E7F60C10057F61D /* Exceptions for "PictureDay" folder in "PictureDay" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = DFE80FFB2E7A391600FA4162 /* PictureDay */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DFE80FFE2E7A391600FA4162 /* PictureDay */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DF98EF872E7F60C10057F61D /* Exceptions for "PictureDay" folder in "PictureDay" target */,
+			);
 			path = PictureDay;
 			sourceTree = "<group>";
 		};
@@ -346,6 +356,8 @@
 		};
 		DFE810232E7A391800FA4162 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = DFE80FFE2E7A391600FA4162 /* PictureDay */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -354,6 +366,7 @@
 				DEVELOPMENT_TEAM = 48VXLBS5Z4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PictureDay/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -375,6 +388,8 @@
 		};
 		DFE810242E7A391800FA4162 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = DFE80FFE2E7A391600FA4162 /* PictureDay */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -383,6 +398,7 @@
 				DEVELOPMENT_TEAM = 48VXLBS5Z4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PictureDay/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

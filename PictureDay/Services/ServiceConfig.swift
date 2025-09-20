@@ -9,7 +9,9 @@ import Foundation
 
 struct ServiceConfig {
     static let baseURL = "https://api.nasa.gov/planetary/apod"
-    static let apiKey = "DbVfQ2rMC5rBVbcxaLMl8PTbi6jzvFkn06buczec"
+    static var apiKey: String {
+           return Bundle.main.object(forInfoDictionaryKey: "NASA_API_KEY_NAME") as? String ?? ""
+       }
     
     static func url(for date: Date? = nil) -> URL? {
         var components = URLComponents(string: baseURL)
