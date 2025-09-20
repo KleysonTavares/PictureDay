@@ -10,9 +10,10 @@ Um aplicativo iOS que consome a API pública da NASA APOD (Astronomy Picture of 
 2. **Navegação Temporal** - Navegar para dias anteriores e posteriores
 3. **Lista de Fotos** - Visualizar as últimas 10 fotos disponíveis com scroll inifinito carregando a cada 10 imagens
 4. **Detalhes da Foto** - Tela dedicada com imagem em tamanho maior, título, descrição e data
-5. **Sistema de Favoritos** - Salvar fotos favoritas localmente usando Core Data
-6. **Tela de Favoritos** - Visualizar todas as fotos favoritadas
-7. **Interface Intuitiva** - Design moderno com tema escuro e navegação por abas
+5. **Foto FullScreen** - Tela dedicada com imagem em tamanho máximo
+6. **Sistema de Favoritos** - Salvar fotos favoritas localmente usando Core Data
+7. **Tela de Favoritos** - Visualizar todas as fotos favoritadas
+8. **Interface Intuitiva** - Design moderno com tema escuro e navegação por abas
 
 ## 🏗️ Arquitetura
 
@@ -20,31 +21,47 @@ Um aplicativo iOS que consome a API pública da NASA APOD (Astronomy Picture of 
 
 O aplicativo segue a arquitetura MVVM para garantir separação clara de responsabilidades:
 
-- **Models**: `APODResponse`, `APODError`, `APODServiceConfig`
-- **Views**: `APODMainView`, `APODListView`, `APODDetailView`, `FavoritesView`
-- **ViewModels**: `APODViewModel`, `APODListViewModel`, `FavoritesViewModel`, `APODDetailViewModel`
-- **Services**: `APODService`, `FavoritesService`, `MockFavoritesService`
+- **Models**: `APODModel`, `TypeError
+- **Views**: `APODMainView`, `APODListView`, `APODDetailView`, `FavoritesView
+- **ViewModels**: `PictureDayViewModel`, `ListViewModel`, `FavoritesViewModel`, `DetailViewModel`
+- **Services**: `APODService`, `FavoritesService`, `ServiceConfig`, `ImageLoader`
 
 ### Estrutura de Pastas
 
 ```
 PictureDay/
 ├── Models/
-│   └── APODModel.swift
+│   ├── APODModel.swift
+│   └── TypeError.swift
 ├── Services/
 │   ├── APODService.swift
 │   ├── FavoritesService.swift
-│   └── MockFavoritesService.swift
+│   ├── ServiceConfig.swift
+│   └── ImageLoader.swift
 ├── ViewModels/
-│   ├── APODViewModel.swift
-│   ├── APODListViewModel.swift
-│   └── FavoritesViewModel.swift
+│   ├── DetailViewModel.swift
+│   ├── FavoritesViewModel.swift
+│   ├── ListViewModel.swift
+│   └── PictureDayViewModel.swift
 ├── Views/
-│   ├── APODMainView.swift
-│   ├── APODListView.swift
-│   ├── APODDetailView.swift
-│   └── FavoritesView.swift
-└── ContentView.swift
+│   ├── Favorites/
+│   │   ├── FavoriteRowView.swift
+│   │   └── FavoritesView.swift
+│   ├── List/
+│   │   ├── ListRowView.swift
+│   │   └── ListView.swift
+│   ├── PictureDay/
+│   │   ├── ImageDayView.swift
+│   │   └── PictureDayView.swift
+│   └── PictureDetail/
+│       ├── FullScreenImageView.swift
+│       └── PictureDetailView.swift
+├── ContentView
+├── LaunchScreenView
+├── Persistence
+├── PictureDay
+├── PictureDayApp
+└── Secrets.swift
 ```
 
 ## 🛠️ Tecnologias Utilizadas
@@ -87,7 +104,7 @@ PictureDay/
 O aplicativo já está configurado com uma chave de API da NASA. Se necessário, você pode:
 
 1. Obter sua própria chave em: https://api.nasa.gov/
-2. Substituir a chave em `APODServiceConfig.swift`
+2. Substituir a chave em `Secrets.xcconfig`
 
 ## 📊 Decisões Técnicas
 
@@ -144,23 +161,28 @@ xcodebuild test -scheme PictureDay -destination 'platform=iOS Simulator,name=iPh
 
 ### Funcionalidades Futuras
 
-1. **Cache de Imagens**
+1. **LaunchScreen**
+   - Criar um Storyboard com a animação e apontar o mesmo no project
+   
+2. **Atualizar lista**
+   - após clicar para ver o detalhe de uma imagen na tela de lista e marcar a imagem como favorito, atualizar a lista de favoritos com o coredata sem fazer uma chamada de rede.
+
+3. **Criptografia da apiKey**
+   - a apiKey ficou oculta no arquivo Secrets, porém ficou exposta no github, o ideal é manter a mesma criptografada no projeto
+
+4. **Cache de Imagens**
    - Implementar cache local para melhor performance
    - Reduzir uso de dados móveis
 
-2. **Compartilhamento**
+5. **Compartilhamento**
    - Permitir compartilhar fotos via redes sociais
    - Salvar imagens no álbum do dispositivo
 
-3. **Notificações**
+6. **Notificações**
    - Notificar sobre nova foto do dia
    - Lembretes personalizáveis
 
-4. **Filtros e Busca**
-   - Filtrar fotos por tipo de mídia
-   - Buscar fotos por palavras-chave
-
-5. **Modo Offline**
+7. **Modo Offline**
    - Cache inteligente para uso sem internet
    - Sincronização quando conectado
 
@@ -182,9 +204,6 @@ xcodebuild test -scheme PictureDay -destination 'platform=iOS Simulator,name=iPh
    - Adicionar testes de UI
    - Implementar testes de integração
 
-## 📱 Capturas de Tela
-
-*As capturas de tela serão adicionadas após a execução do aplicativo*
 
 ## 🤝 Contribuição
 
@@ -194,9 +213,6 @@ xcodebuild test -scheme PictureDay -destination 'platform=iOS Simulator,name=iPh
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
 
 ## 👨‍💻 Autor
 
@@ -207,7 +223,6 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 - NASA por fornecer a API APOD gratuitamente
 - Comunidade Swift/SwiftUI por recursos e tutoriais
-- Apple pela documentação e ferramentas de desenvolvimento
 
 ---
 
